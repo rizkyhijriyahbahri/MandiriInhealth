@@ -9,7 +9,7 @@ namespace MandiriInhealth.Models
     {
         public int UserSkillId { get; set; }
         public string Username { get; set; }
-        public int SkillId { get; set; }
-        public int SkillLevelId { get; set; }
+        public int? SkillId { get; set; }
+        public int? SkillLevelId { get; set; }
     }
 }
