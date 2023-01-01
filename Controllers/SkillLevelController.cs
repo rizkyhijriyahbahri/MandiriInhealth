@@ -22,7 +22,7 @@ namespace MandiriInhealth.Controllers
                                 SkillLevelId = s.skillLevelId,
                                 SkillLevelName = s.skillLevelName
                             }).ToList<SkillLevelViewModel>();
-            
+
 
             if (skillLevelList.Count == 0)
             {
@@ -53,6 +53,68 @@ namespace MandiriInhealth.Controllers
             }
 
             return Ok(skillLevel);
+        }
+
+        public SkillLevel CreateSkillLevel(SkillLevel skillLevelModel)
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+                    conn.SkillLevel.Add(skillLevelModel);
+                    conn.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return skillLevelModel;
+        }
+
+        public SkillLevel UpdateSkill(int skillLevelID)
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+                    var data = conn.SkillLevel.Where(x => x.skillLevelId == skillLevelID).SingleOrDefault();
+                    return data;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public SkillLevel DeleteSkill(int skillLevelID) //buat delete biasanya pake row status biar softdelete aja, tapi di soal tablenya ga ada row status
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+
+                    var data = conn.SkillLevel.FirstOrDefault(x => x.skillLevelId == skillLevelID);
+                    if (data != null)
+                    {
+                        conn.SkillLevel.Remove(data);
+                        conn.SaveChanges();
+
+                    }
+                    return data;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
         }
     }
 }

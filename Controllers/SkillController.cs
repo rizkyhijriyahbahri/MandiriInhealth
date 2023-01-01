@@ -54,5 +54,67 @@ namespace MandiriInhealth.Controllers
 
             return Ok(skill);
         }
+
+        public Skill CreateUSkill(Skill skillModel)
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+                    conn.Skill.Add(skillModel);
+                    conn.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return skillModel;
+        }
+
+        public Skill UpdateSkill(int skillID)
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+                    var data = conn.Skill.Where(x => x.skillId == skillID).SingleOrDefault();
+                    return data;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public Skill DeleteSkill(int skillID) //buat delete biasanya pake row status biar softdelete aja, tapi di soal tablenya ga ada row status
+        {
+            try
+            {
+                using (var conn = new MandiriInTestEntities())
+                {
+
+                    var data = conn.Skill.FirstOrDefault(x => x.skillId == skillID);
+                    if (data != null)
+                    {
+                        conn.Skill.Remove(data);
+                        conn.SaveChanges();
+
+                    }
+                    return data;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+        }
     }
 }
